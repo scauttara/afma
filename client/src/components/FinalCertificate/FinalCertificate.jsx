@@ -5,6 +5,7 @@ import { getSubjects } from '../../config/SubjectConfig';
 import { calculateGrade, calculateGPA } from '../../utils/grading';
 import signatureImg from '../../assets/signature.png'; 
 import './FinalCertificate.scss';
+import logo from '../../assets/logo.png'
 
 const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVersion }) => {
   const printRef = useRef();
@@ -44,8 +45,8 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
   const CertificateCard = ({ student }) => (
     <div className="certificate-page">
       <header className="school-header">
-        <h1>AL-FALAH MODEL ACADEMY</h1>
-        <p className="address">3, East Mollartek, Dakshinkhan, Dhaka-1230</p>
+        <img src={logo} alt="" />        <h1>AL-FALAH MODEL ACADEMY</h1>
+        <p className="address">3, East Mollartek, Dakshinkhan, Dhaka-1230</p>        
         <div className="exam-title"><h2>YEARLY EXAM - 2025</h2></div>
         <div className="student-info-grid">
            <div className="info-item"><strong>Name:</strong> {student.name}</div>
@@ -54,7 +55,7 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
            <div className="info-item"><strong>Version:</strong> {selectedVersion}</div>
            <div className="info-item"><strong>ID:</strong> {student.id}</div>
            <div className="info-item"><strong>Roll:</strong> {student.roll}</div>
-           <div className="info-item" style={{color: '#c53030'}}><strong>Merit Pos:</strong> {student.meritPosition}</div>
+           <div className="info-item merit-position" style={{color: '#c53030'}}><strong>Merit Position:</strong> {student.meritPosition}</div>
         </div>
       </header>
       <table className="main-table">

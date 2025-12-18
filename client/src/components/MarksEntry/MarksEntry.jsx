@@ -92,7 +92,7 @@ const MarksEntry = ({ selectedClass, selectedGroup, selectedVersion, students, s
             <tr>
               {subjects.map(sub => (
                 <React.Fragment key={sub}>
-                  <th className="sub-th">Term</th><th className="sub-th">MT</th><th className="sub-th total">Tot</th>
+                  <th className="sub-th">Term</th><th className="sub-th">MT</th><th className="sub-th total">Total</th>
                 </React.Fragment>
               ))}
             </tr>
