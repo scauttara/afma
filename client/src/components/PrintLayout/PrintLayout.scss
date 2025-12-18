@@ -1,0 +1,29 @@
+@media print { @page { size: A4 portrait; margin: 0; } body { margin: 0; padding: 0; } .no-print { display: none !important; } }
+
+.print-layout-container {
+  display: flex; height: calc(100vh - 60px); background: #cbd5e0;
+  .sidebar { width: 250px; background: white; padding: 15px; overflow-y: auto; .btn-group { display: flex; gap: 5px; margin-bottom: 10px; button { flex:1; padding:8px; cursor:pointer; font-weight:bold; color:white; border:none; border-radius:4px; &.print{background:#2b6cb0} &.download{background:#e53e3e} } } }
+  .preview-area { flex: 1; overflow-y: auto; display: flex; justify-content: center; padding: 20px; }
+}
+
+.detailed-card-page {
+  width: 210mm; min-height: 297mm; background: white; padding: 15mm; box-sizing: border-box; page-break-after: always; font-family: 'Times New Roman', serif; position: relative;
+  .school-header {
+    text-align: center; margin-bottom: 20px;
+    h1 { margin: 0; font-size: 22pt; text-transform: uppercase; color: #1a365d; }
+    p { margin: 5px 0 10px; color: #555; }
+    .exam-title { border: 1px solid #333; padding: 5px; margin-bottom: 15px; background: #f9f9f9; h2 { margin: 0; font-size: 14pt; } }
+    .student-box { border: 1px solid #333; padding: 10px; .row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11pt; } }
+  }
+  .marks-table {
+    width: 100%; border-collapse: collapse; margin-bottom: 20px;
+    th, td { border: 1px solid #333; padding: 5px; text-align: center; font-size: 10pt; }
+    th { background: #e2e8f0; font-weight: bold; }
+    .sub-col { width: 40%; text-align: left; padding-left: 10px; }
+    .summary-row { background: #edf2f7; font-weight: bold; }
+  }
+  .signatures {
+    display: flex; justify-content: space-between; margin-top: 100px; padding: 0 10px;
+    .sig { text-align: center; width: 160px; .sig-img { height: 50px; display: block; margin: 0 auto -10px auto; } .line { border-top: 1px solid #333; padding-top: 5px; font-weight: bold; } }
+  }
+}

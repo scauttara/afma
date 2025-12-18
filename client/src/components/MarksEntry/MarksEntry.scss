@@ -1,0 +1,29 @@
+.marks-entry-container {
+  padding: 20px; background: #f8f9fa; min-height: 100vh; padding-bottom: 60px;
+  .add-student-bar {
+    background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; align-items: center; gap: 20px;
+    h3 { margin: 0; font-size: 1rem; color: #4a5568; width: 250px; }
+    .inputs {
+      display: flex; gap: 10px;
+      input { padding: 8px; border: 1px solid #cbd5e0; border-radius: 4px; &.input-roll { width: 80px; } &.input-name { width: 250px; } }
+      button { background: #3182ce; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; &:hover { background: #2b6cb0; } }
+    }
+  }
+  .status-bar {
+    position: fixed; bottom: 20px; left: 20px; background: #2d3748; color: white; padding: 8px 20px; border-radius: 4px; font-weight: bold; z-index: 2000;
+    &.saving { background: #d69e2e; color: black; } &.saved { background: #38a169; } &.error { background: #e53e3e; }
+  }
+  .table-wrapper {
+    overflow-x: auto; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      th, td { border: 1px solid #e2e8f0; text-align: center; padding: 6px; white-space: nowrap; }
+      .fixed-col { position: sticky; left: 0; background: #fff; z-index: 10; &.name-col { left: 50px; min-width: 180px; text-align: left; padding-left: 10px; } }
+      thead th.fixed-col { z-index: 20; }
+      .subject-header { background: #2b6cb0; color: white; }
+      .sub-th { font-size: 0.75rem; background: #ebf8ff; }
+      .total-cell { font-weight: bold; background: #f7fafc; }
+      input { width: 40px; text-align: center; border: 1px solid transparent; border-radius: 4px; &:focus { outline: none; border-color: #3182ce; background: #ebf8ff; } }
+    }
+  }
+}
