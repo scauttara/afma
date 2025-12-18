@@ -55,7 +55,12 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
           <div className="info-item"><strong>Version:</strong> {selectedVersion}</div>
           <div className="info-item"><strong>ID:</strong> {student.id}</div>
           <div className="info-item"><strong>Roll:</strong> {student.roll}</div>
-          <div className="info-item merit-position" style={{ color: '#c53030' }}><strong>Merit Position:</strong> {student.meritPosition}</div>
+
+//HIDING MERIT POSITION 
+FOR TEMPORARY
+
+
+          <div className="info-item merit-position" style={{ color: '#c53030', display:'hidden'}}><strong>Merit Position:</strong> {student.meritPosition}</div>
         </div>
       </header>
       <table className="main-table">
