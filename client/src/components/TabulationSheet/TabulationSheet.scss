@@ -1,7 +1,9 @@
+/* TabulationSheet.scss */
+
 .tabulation-container {
   padding: 20px;
   background: #555;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
 
@@ -17,14 +19,26 @@
       font-weight: bold;
       cursor: pointer;
       border-radius: 4px;
+      margin: 0 5px;
 
       &.print-btn {
-        background: #48bb78
+        background: #48bb78;
       }
+
+      &.download-btn {
+        background: #ed8936;
+      }
+    }
+
+    .info {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #ccc;
     }
   }
 }
 
+/* Page base styling  */
 .landscape-a4 {
   width: 297mm;
   min-height: 210mm;
@@ -33,21 +47,54 @@
   box-sizing: border-box;
   margin: 0 auto 30px auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
+/* PDF MODE: Strips away preview styles to fix "drift" and "blank pages"  */
+.pdf-mode {
+  background: white !important;
+  width: 297mm !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .landscape-a4 {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none;
+    padding: 10mm !important;
+
+    /* Let height be natural for open visibility  */
+    height: auto !important;
+    min-height: 209mm !important;
+    overflow: visible;
+
+    /* Isolate pages  */
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .landscape-a4:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+}
+
+/* Header styling  */
 .sheet-header {
   position: relative;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border-bottom: 2px solid #000;
   padding-bottom: 5px;
-      img{
-      width: 100px;
-      z-index: 99;
-      position: absolute;
-      left: 15px;
-      top: -15px;
-    }
+
+  img {
+    width: 70px;
+    position: absolute;
+    left: 0px;
+    top: -20px;
+  }
 
   h1 {
     margin: 0;
@@ -56,10 +103,16 @@
     color: #1a365d;
   }
 
+  h3 {
+    margin: 5px 0;
+    font-size: 12pt;
+  }
+
   .meta {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 5px;
+    font-size: 10pt;
     font-weight: bold;
     background: #eee;
     padding: 5px;
@@ -67,6 +120,7 @@
   }
 }
 
+/* Table styling  */
 .tabulation-table {
   width: 100%;
   border-collapse: collapse;
@@ -75,7 +129,7 @@
   th,
   td {
     border: 1px solid #444;
-    padding: 3px;
+    padding: 4px;
     text-align: center;
     vertical-align: middle;
   }
@@ -100,6 +154,11 @@
     font-weight: bold;
   }
 
+  .stat-header {
+    background: #2b6cb0;
+    color: white;
+  }
+
   .total {
     font-weight: bold;
     background: #edf2f7;
@@ -108,12 +167,37 @@
   .bold {
     font-weight: bold;
   }
+
+  .tiny {
+    font-size: 0.7rem;
+  }
+}
+
+/* Signature Section: 100px gap as requested  */
+.signature-section {
+  margin-top: 100px;
+  text-align: right;
+  padding-right: 50px;
+
+  .sig-line {
+    border-top: 1px solid black;
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: bold;
+  }
 }
 
 @media print {
   @page {
     size: landscape;
-    margin: 5mm;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
   }
 
   .no-print {
@@ -121,11 +205,9 @@
   }
 
   .tabulation-container {
-    height: auto;
-    overflow: visible;
     background: white;
+    height: auto;
     padding: 0;
-    margin: 0;
   }
 
   .landscape-a4 {
@@ -133,10 +215,6 @@
     margin: 0 !important;
     width: 100%;
     page-break-after: always;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    padding: 5mm;
   }
 }

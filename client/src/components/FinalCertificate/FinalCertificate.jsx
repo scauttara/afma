@@ -1,14 +1,16 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import html2pdf from 'html2pdf.js';
+import { Download, Printer } from 'lucide-react';
 import { getSubjects } from '../../config/SubjectConfig';
 import { calculateGrade, calculateGPA } from '../../utils/grading';
 import signatureImg from '../../assets/signature.png';
+import logo from '../../assets/logo.png';
 import './FinalCertificate.scss';
-import logo from '../../assets/logo.png'
 
 const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVersion }) => {
-  const printRef = useRef();
+  const printAllRef = useRef();
+  const previewRef = useRef();
   const [previewId, setPreviewId] = useState(students[0]?.id || null);
 
   const processedStudents = useMemo(() => {
@@ -33,11 +35,33 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
 
   const previewStudent = processedStudents.find(s => s.id === previewId) || processedStudents[0];
 
-  const handlePrint = useReactToPrint({ content: () => printRef.current, documentTitle: `Certificate` });
+  const handlePrintAll = useReactToPrint({ 
+    content: () => printAllRef.current, 
+    documentTitle: `Certificates_${selectedClass}` 
+  });
 
-  const handleDownloadPDF = () => {
-    const opt = { margin: 0, filename: `Certificate.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
-    html2pdf().set(opt).from(printRef.current).save();
+  const handleDownloadAllPDF = () => {
+    const opt = { 
+      margin: 0, 
+      filename: `Certificates_${selectedClass}.pdf`, 
+      image: { type: 'jpeg', quality: 0.98 }, 
+      html2canvas: { scale: 2, useCORS: true }, 
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+    };
+    html2pdf().set(opt).from(printAllRef.current).save();
+  };
+
+  const handleDownloadSinglePDF = (student) => {
+    const targetStudent = student || previewStudent;
+    const element = previewRef.current;
+    const opt = { 
+      margin: 0, 
+      filename: `Certificate_${targetStudent.roll}_${targetStudent.name}.pdf`, 
+      image: { type: 'jpeg', quality: 0.98 }, 
+      html2canvas: { scale: 2, useCORS: true }, 
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+    };
+    html2pdf().set(opt).from(element).save();
   };
 
   if (!students.length) return <div style={{ padding: '20px', color: 'white' }}>No Data</div>;
@@ -45,24 +69,34 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
   const CertificateCard = ({ student }) => (
     <div className="certificate-page">
       <header className="school-header">
-        <img src={logo} alt="" />        <h1>AL-FALAH MODEL ACADEMY</h1>
+        <img src={logo} alt="Logo" />
+        <h1>AL-FALAH MODEL ACADEMY</h1>
         <p className="address">3, East Mollartek, Dakshinkhan, Dhaka-1230</p>
         <div className="exam-title"><h2>YEARLY EXAM - 2025</h2></div>
+        
         <div className="student-info-grid">
-          <div className="info-item"><strong>Name:</strong> {student.name}</div>
+          <div className="info-item name-item"><strong>Name:</strong> {student.name}</div>
           <div className="info-item"><strong>Class:</strong> {student.class}</div>
           <div className="info-item"><strong>Group:</strong> {student.group}</div>
-          <div className="info-item"><strong>Version:</strong> {selectedVersion}</div>
+          
+          <div className="info-item version-item"><strong>Version:</strong> {selectedVersion}</div>
           <div className="info-item"><strong>ID:</strong> {student.id}</div>
           <div className="info-item"><strong>Roll:</strong> {student.roll}</div>
-
-          <div className="info-item merit-position" style={{ color: '#c53030'}}><strong>Merit Position:</strong> {student.meritPosition}</div>
+          
+          <div className="merit-position"><strong>Merit Position:</strong> {student.meritPosition}</div>
         </div>
       </header>
+
       <table className="main-table">
         <thead>
           <tr>
-            <th className="sub-col">Subject Name</th><th className="num-col">Total</th><th className="num-col">Obt.</th><th className="grade-col">Grade</th><th className="grade-col">GP</th><th className="summary-col">GPA</th><th className="summary-col">Grade</th>
+            <th className="sub-col">Subject Name</th>
+            <th className="num-col">Total</th>
+            <th className="num-col">Obt.</th>
+            <th className="grade-col">Grade</th>
+            <th className="grade-col">GP</th>
+            <th className="summary-col">GPA</th>
+            <th className="summary-col">Grade</th>
           </tr>
         </thead>
         <tbody>
@@ -83,19 +117,26 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
             <td style={{ textAlign: 'right', paddingRight: '10px' }}><strong>Grand Total:</strong></td>
             <td>{student.totalPossibleMarks}</td>
             <td className="bold">{student.stats.totalMarks}</td>
-            <td colSpan="4" className="comment">{student.stats.totalGrade === 'F' ? 'Better luck next time!' : 'Congratulations!'}</td>
+            <td colSpan="4" className="comment">
+              {student.stats.totalGrade === 'F' ? 'Better luck next time!' : 'Congratulations!'}
+            </td>
           </tr>
         </tfoot>
       </table>
+
       <div className="footer-stats">
         <div className="stat">Working Days: <strong>75</strong></div>
         <div className="stat">Present Days: <strong>{student.presentDays}</strong></div>
         <div className="stat">Behavior: <strong>Excellent</strong></div>
       </div>
+
       <div className="signatures">
         <div className="sig-box"><div className="line">Guardian</div></div>
         <div className="sig-box"><div className="line">Class Teacher</div></div>
-        <div className="sig-box"><img src={signatureImg} alt="Sig" className="sig-img" /><div className="line">Principal</div></div>
+        <div className="sig-box">
+          <img src={signatureImg} alt="Sig" className="sig-img" />
+          <div className="line">Principal</div>
+        </div>
       </div>
       <div className="contact-footer">Website: afma.suyena.com | Mobile: 01714-359692</div>
     </div>
@@ -104,17 +145,50 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
   return (
     <div className="final-certificate-container">
       <div className="sidebar no-print">
-        <div className="btn-group">
-          <button onClick={handlePrint} className="action-btn print">🖨️ Print All</button>
-          <button onClick={handleDownloadPDF} className="action-btn download">⬇️ Download PDF</button>
+        <div className="btn-group-main">
+          <button onClick={handlePrintAll} className="action-btn print-all">🖨️ Print All</button>
+          <button onClick={handleDownloadAllPDF} className="action-btn download-all">⬇️ PDF All</button>
         </div>
         <div className="list">
-          {processedStudents.map(s => <div key={s.id} className={`item ${s.id === previewId ? 'active' : ''}`} onClick={() => setPreviewId(s.id)}><span className="roll">{s.roll}</span> {s.name}</div>)}
+          {processedStudents.map(s => (
+            <div key={s.id} className={`item ${s.id === previewId ? 'active' : ''}`} onClick={() => setPreviewId(s.id)}>
+              <div className="name-info">
+                <span className="roll">{s.roll}</span>
+                <span className="name">{s.name}</span>
+              </div>
+              <button className="individual-dl" onClick={(e) => { e.stopPropagation(); handleDownloadSinglePDF(s); }}>
+                <Download size={16} />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
-      <div className="preview-area"><div className="paper-a4">{previewStudent && <CertificateCard student={previewStudent} />}</div></div>
-      <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}><div ref={printRef}>{processedStudents.map((student, i) => (<div key={student.id}><CertificateCard student={student} /><div className="html2pdf__page-break"></div>{i < processedStudents.length - 1 && <div className="page-break" />}</div>))}</div></div>
+
+      <div className="preview-area">
+        <div className="preview-controls no-print">
+            <h3>Preview: {previewStudent?.name}</h3>
+            <button className="dl-current-btn" onClick={() => handleDownloadSinglePDF()}>
+              <Download size={18} /> Download This Certificate
+            </button>
+        </div>
+        <div className="paper-a4" ref={previewRef}>
+          {previewStudent && <CertificateCard student={previewStudent} />}
+        </div>
+      </div>
+
+      <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
+        <div ref={printAllRef}>
+          {processedStudents.map((student, i) => (
+            <div key={student.id}>
+              <CertificateCard student={student} />
+              <div className="html2pdf__page-break"></div>
+              {i < processedStudents.length - 1 && <div className="page-break" />}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
+
 export default FinalCertificate;

@@ -1,39 +1,13 @@
+/* FinalCertificate.scss */
+
 @media print {
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  .final-certificate-container {
-    display: block;
-    height: auto;
-    background: white;
-    padding: 0;
-  }
-
-  .page-break {
-    page-break-after: always;
-  }
-
-  .paper-a4 {
-    box-shadow: none;
-    margin: 0;
-    width: 100%;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
+  @page { size: A4 portrait; margin: 0; }
+  body { margin: 0; padding: 0; }
+  .no-print { display: none !important; }
+  .final-certificate-container { display: block; height: auto; background: white; padding: 0; }
+  .page-break { page-break-after: always; }
+  .paper-a4 { box-shadow: none; margin: 0; width: 100%; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
 
 .final-certificate-container {
@@ -42,66 +16,67 @@
   background: #cbd5e0;
 
   .sidebar {
-    width: 250px;
+    width: 280px;
     background: white;
     padding: 15px;
     overflow-y: auto;
+    border-right: 1px solid #a0aec0;
 
-    .btn-group {
+    .btn-group-main {
       display: flex;
       gap: 5px;
-      margin-bottom: 10px;
-
+      margin-bottom: 15px;
       button {
-        flex: 1;
-        padding: 8px;
-        border: none;
-        cursor: pointer;
-        color: white;
-        font-weight: bold;
-
-        &.print {
-          background: #2b6cb0
-        }
-
-        &.download {
-          background: #e53e3e
-        }
+        flex: 1; padding: 10px 5px; border: none; cursor: pointer; color: white;
+        font-weight: bold; border-radius: 4px; font-size: 0.85rem;
+        &.print-all { background: #2b6cb0; &:hover { background: #2c5282; } }
+        &.download-all { background: #2d3748; &:hover { background: #1a202c; } }
       }
     }
-    .list{
-      div{
-        margin-top: 15px;
-        box-shadow: 0px 0px 2px 2px rgb(78, 96, 201);
-        border-radius: 2px;
-        padding: 2px 20px;
-        cursor: pointer;
+
+    .list .item {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px; background: #f7fafc; border: 1px solid #e2e8f0;
+      border-radius: 6px; padding: 8px 12px; cursor: pointer; transition: all 0.2s;
+      &:hover { background: #ebf8ff; border-color: #bee3f8; }
+      &.active { border-color: #3182ce; background: #ebf8ff; box-shadow: 0 0 0 1px #3182ce; }
+      .name-info {
+        display: flex; flex-direction: column; overflow: hidden;
+        .roll { font-weight: bold; font-size: 0.8rem; color: #718096; }
+        .name { font-size: 0.95rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+      }
+      .individual-dl {
+        background: #e53e3e; color: white; border: none; padding: 6px;
+        border-radius: 4px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; &:hover { background: #c53030; }
       }
     }
   }
 
   .preview-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+    flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; align-items: center;
+    .preview-controls {
+      width: 210mm; display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 15px; background: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      h3 { margin: 0; color: #2d3748; }
+      .dl-current-btn {
+        background: #38a169; color: white; border: none; padding: 8px 16px;
+        border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 8px;
+        cursor: pointer; &:hover { background: #2f855a; }
+      }
+    }
   }
 }
 
 .paper-a4 {
-  width: 210mm;
-  min-height: 297mm;
-  background: white;
-  padding: 10mm;
-  box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 210mm; min-height: 297mm; background: white; padding: 10mm;
+  box-sizing: border-box; box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .certificate-page {
   font-family: 'Times New Roman', serif;
   text-align: center;
-  border: 2px solid #333;
+  border: 4px double #333;
   padding: 5mm;
   height: 275mm;
   position: relative;
@@ -109,115 +84,84 @@
 
   .school-header {
     h1 {
-      margin: 0;
-      font-size: 24pt;
+      margin-top: 45px; // Vertical gap for logo
+      margin-bottom: 0;
+      font-size: 26pt;
       color: #1a365d;
       text-transform: uppercase;
     }
 
-    img{
-      width: 100px;
-      z-index: 99;
-      position: absolute;
-      left: 15px;
-      top: 10px;
-    }
+    .address { margin: 2px 0; font-size: 11pt; color: #4a5568; }
+
+    img { width: 95px; position: absolute; left: 20px; top: 10px; }
 
     .exam-title {
-      border-top: 1px solid #333;
-      border-bottom: 1px solid #333;
-      margin: 5px 0;
-      padding: 5px;
+      border-top: 2px solid #333; border-bottom: 2px solid #333;
+      margin: 10px 0; padding: 5px;
+      h2 { margin: 0; font-size: 16pt; }
     }
 
     .student-info-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 5px;
+      grid-template-columns: repeat(4, 1fr); // 4 equal columns
+      gap: 8px 15px;
       text-align: left;
       margin-top: 15px;
-      border: 1px solid #ccc;
-      padding: 10px;
-    .merit-position{
-      grid-column-start: 3;
-      grid-column-end: 5;      
-      place-self: center;
-    }
+      border: 1px solid #cbd5e0;
+      padding: 12px;
+      background: #f8fafc;
+      font-size: 10.5pt;
+
+      .info-item {
+        line-height: 1.4;
+        white-space: nowrap;
+
+        &.name-item, &.version-item {
+          grid-column: span 2; // Spans Name and Version across 2 columns
+        }
+      }
+
+      .merit-position {
+        grid-column: span 4;
+        text-align: center;
+        font-size: 14pt;
+        font-weight: bold;
+        color: #c53030;
+        border-top: 1px dashed #cbd5e0;
+        padding-top: 8px;
+        margin-top: 5px;
+      }
     }
   }
 
   .main-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-
-    th,
-    td {
-      border: 1px solid #333;
-      padding: 3px 5px;
-      font-size: 11pt;
-      vertical-align: middle;
-    }
-
-    th {
-      background: #f0f0f0;
-      font-weight: bold;
-    }
-
-    .gpa-cell {
-      font-size: 14pt;
-      font-weight: bold;
-    }
-
+    width: 100%; border-collapse: collapse; margin-top: 15px;
+    th, td { border: 1px solid #333; padding: 4px 5px; font-size: 10.5pt; vertical-align: middle; }
+    th { background: #edf2f7; font-weight: bold; text-transform: uppercase; font-size: 9pt; }
+    .gpa-cell, .grade-cell { font-size: 16pt; font-weight: bold; color: #2d3748; }
     .footer-row {
-      background: #f9f9f9;
-      font-weight: bold;
+      background: #f7fafc; font-weight: bold;
+      .comment { font-style: italic; color: #2b6cb0; font-size: 9.5pt; }
     }
   }
 
   .footer-stats {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    border: 1px solid #333;
-    padding: 8px;
-    font-size: 11pt;
+    display: flex; justify-content: space-around; margin-top: 15px;
+    border: 1px solid #333; padding: 8px; font-size: 11pt;
+    strong { color: #2d3748; }
   }
 
   .signatures {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    padding: 0 20px;
-
+    display: flex; justify-content: space-between; margin-top: 35px; padding: 0 20px;
     .sig-box {
-      width: 150px;
-      text-align: center;
-
-      .sig-img {
-        height: 40px;
-        display: block;
-        margin: 0 auto -5px auto;
-      }
-
-      .line {
-        border-top: 1px solid #333;
-        padding-top: 5px;
-        font-weight: bold;
-      }
+      width: 160px; text-align: center;
+      .sig-img { height: 45px; display: block; margin: 0 auto -8px auto; }
+      .line { border-top: 1px solid #333; padding-top: 5px; font-weight: bold; }
     }
   }
 
   .contact-footer {
-    position: absolute;
-    bottom: 5mm;
-    left: 0;
-    right: 0;
-    font-size: 9pt;
-    color: #555;
-    border-top: 1px dotted #999;
-    padding-top: 5px;
+    position: absolute; bottom: 5mm; left: 0; right: 0; font-size: 9pt;
+    color: #718096; border-top: 1px dotted #cbd5e0; padding-top: 5px;
   }
 }
-
-

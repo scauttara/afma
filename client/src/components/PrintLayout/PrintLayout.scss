@@ -1,29 +1,100 @@
-@media print { @page { size: A4 portrait; margin: 0; } body { margin: 0; padding: 0; } .no-print { display: none !important; } }
+/* PrintLayout.scss */
+
+@media print { 
+  @page { size: A4 portrait; margin: 0; } 
+  body { margin: 0; padding: 0; } 
+  .no-print { display: none !important; } 
+  .print-layout-container { display: block; background: white; }
+  .detailed-card-page { page-break-after: always; break-after: page; }
+}
 
 .print-layout-container {
   display: flex; height: calc(100vh - 60px); background: #cbd5e0;
-  .sidebar { width: 250px; background: white; padding: 15px; overflow-y: auto; .btn-group { display: flex; gap: 5px; margin-bottom: 10px; button { flex:1; padding:8px; cursor:pointer; font-weight:bold; color:white; border:none; border-radius:4px; &.print{background:#2b6cb0} &.download{background:#e53e3e} } } }
-  .preview-area { flex: 1; overflow-y: auto; display: flex; justify-content: center; padding: 20px; }
+
+  .sidebar { 
+    width: 280px; background: white; padding: 15px; overflow-y: auto; border-right: 1px solid #a0aec0;
+    .btn-group-main { 
+      display: flex; gap: 5px; margin-bottom: 15px; 
+      button { 
+        flex: 1; padding: 10px 5px; border: none; cursor: pointer; color: white;
+        font-weight: bold; border-radius: 4px; font-size: 0.85rem;
+        &.print-all { background: #2b6cb0; }
+        &.download-all { background: #2d3748; }
+      } 
+    }
+    .student-list {
+      .list-item {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 8px; background: #f7fafc; border: 1px solid #e2e8f0;
+        border-radius: 6px; padding: 8px 12px; cursor: pointer;
+        &.active { border-color: #3182ce; background: #ebf8ff; }
+        .name-info { display: flex; flex-direction: column; .roll { font-weight: bold; font-size: 0.8rem; } }
+        .individual-dl { background: #e53e3e; color: white; border: none; padding: 6px; border-radius: 4px; display: flex; align-items: center; }
+      }
+    }
+  }
+
+  .preview-area { 
+    flex: 1; overflow-y: auto; padding: 20px; display: block; 
+    .preview-controls {
+      width: 210mm; margin: 0 auto 15px auto; display: flex; justify-content: space-between; align-items: center;
+      background: white; padding: 10px 20px; border-radius: 8px;
+      .dl-current-btn { background: #38a169; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+    }
+    .card-wrapper { width: 210mm; margin: 0 auto; background: white; padding: 0; }
+  }
 }
 
 .detailed-card-page {
-  width: 210mm; min-height: 297mm; background: white; padding: 15mm; box-sizing: border-box; page-break-after: always; font-family: 'Times New Roman', serif; position: relative;
+  width: 210mm; height: 297mm; background: white; padding: 10mm; 
+  box-sizing: border-box; font-family: 'Times New Roman', serif; position: relative;
+  margin: 0 !important; /* CRITICAL: Fixed top-left shift */
+  box-shadow: none;
+
   .school-header {
-    text-align: center; margin-bottom: 20px;
-    h1 { margin: 0; font-size: 22pt; text-transform: uppercase; color: #1a365d; }
-    p { margin: 5px 0 10px; color: #555; }
-    .exam-title { border: 1px solid #333; padding: 5px; margin-bottom: 15px; background: #f9f9f9; h2 { margin: 0; font-size: 14pt; } }
-    .student-box { border: 1px solid #333; padding: 10px; .row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11pt; } }
+    text-align: center; margin-bottom: 15px;
+    h1 { margin-top: 45px; margin-bottom: 0; font-size: 26pt; text-transform: uppercase; color: #1a365d; }
+    .address { margin: 2px 0 5px; color: #555; font-size: 11pt; }
+    .school-logo { width: 90px; position: absolute; left: 10mm; top: 10mm; }
+    .exam-title { border: 2px solid #333; padding: 4px; margin-bottom: 12px; background: #f9f9f9; h2 { margin: 0; font-size: 16pt; } }
+    
+    .student-info-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 12px; text-align: left;
+      margin-top: 10px; border: 1px solid #cbd5e0; padding: 10px; background: #f8fafc; font-size: 10.5pt;
+      .info-item { line-height: 1.4; white-space: nowrap; &.name-item, &.version-item { grid-column: span 2; } }
+      .merit-position {
+        grid-column: span 4; text-align: center; font-size: 14pt; font-weight: bold;
+        color: #c53030; border-top: 1px dashed #cbd5e0; padding-top: 6px; margin-top: 4px;
+      }
+    }
   }
+
   .marks-table {
-    width: 100%; border-collapse: collapse; margin-bottom: 20px;
-    th, td { border: 1px solid #333; padding: 5px; text-align: center; font-size: 10pt; }
-    th { background: #e2e8f0; font-weight: bold; }
-    .sub-col { width: 40%; text-align: left; padding-left: 10px; }
+    width: 100%; border-collapse: collapse; margin-bottom: 15px;
+    th, td { border: 1px solid #333; padding: 3px 5px; text-align: center; font-size: 10.5pt; }
+    th { background: #edf2f7; font-weight: bold; }
+    .sub-name { width: 40%; text-align: left; padding-left: 8px; }
+    .bold { font-weight: bold; }
     .summary-row { background: #edf2f7; font-weight: bold; }
   }
+
+  .bottom-info {
+    display: flex; justify-content: space-around; margin-top: 10px;
+    padding: 8px; border: 1px solid #333; font-size: 11pt;
+    p { margin: 0; }
+  }
+
   .signatures {
-    display: flex; justify-content: space-between; margin-top: 100px; padding: 0 10px;
-    .sig { text-align: center; width: 160px; .sig-img { height: 50px; display: block; margin: 0 auto -10px auto; } .line { border-top: 1px solid #333; padding-top: 5px; font-weight: bold; } }
+    display: flex; justify-content: space-between; margin-top: 45px; padding: 0 10px;
+    .sig { 
+        text-align: center; width: 160px; 
+        .sig-img { height: 40px; display: block; margin: 0 auto -8px auto; } 
+        .line { border-top: 1px solid #333; padding-top: 5px; font-weight: bold; } 
+    }
+  }
+
+  .contact-footer {
+    position: absolute; bottom: 5mm; left: 0; right: 0; font-size: 9pt;
+    color: #718096; border-top: 1px dotted #cbd5e0; padding-top: 5px; text-align: center;
   }
 }
