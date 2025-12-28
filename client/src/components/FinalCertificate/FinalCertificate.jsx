@@ -59,7 +59,7 @@ const FinalCertificate = ({ students, selectedClass, selectedGroup, selectedVers
       <header className="school-header">
         <img src={logo} alt="Logo" className="school-logo" />
       
-        <h1>AL-FALAH MODEL ACADEMY<sup><small><small>EIIN: 134457</small></small></sup></h1>
+        <h1><small>AL-FALAH MODEL ACADEMY</small><sup><small><small>EIIN: 134457</small></small></sup></h1>
         <em>A concern of <strong>Shahid Cadet Academy, Uttara</strong></em>
         
         <p className="address">3, East Mollartek, Dakshinkhan, Dhaka-1230</p>
