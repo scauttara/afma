@@ -9,7 +9,7 @@ const LandingPage = ({ onLoginClick }) => {
         <div className="brand">
           <img src={logo} alt="Logo" />
           <div className="brand-details">
-            <span>AL-FALAH MODEL ACADEMY</span>
+            <span>AL-FALAH MODEL ACADEMY<sup><small><small>EIIN: 134457</small></small></sup></span>
           <span className='desc-concern'><em>A concern of <strong>Shahid Cadet Academy, Uttara</strong></em></span>
           </div>
         </div>

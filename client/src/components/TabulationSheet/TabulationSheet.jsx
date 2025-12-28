@@ -60,7 +60,7 @@ const TabulationSheet = ({ students, selectedClass, selectedGroup, selectedVersi
           <div key={index} className="landscape-a4">
             <header className="sheet-header">
               <img src={logo} alt="Logo" />
-              <h1>AL-FALAH MODEL ACADEMY</h1>
+              <h1>AL-FALAH MODEL ACADEMY<sup><small><small>EIIN: 134457</small></small></sup></h1>
               <em>A concern of <strong>Shahid Cadet Academy, Uttara</strong></em>
               <h3>Tabulation Sheet - Annual Exam 2025</h3>
               <div className="meta"><span>Class: {selectedClass}</span><span>Group: {selectedGroup}</span><span>Version: {selectedVersion}</span><span>Page: {index + 1} / {pages.length}</span></div>
